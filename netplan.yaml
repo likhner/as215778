@@ -1,0 +1,72 @@
+network:
+  version: 2
+  ethernets:
+    eth0:
+      dhcp4: true
+      dhcp4-overrides:
+        use-dns: false
+      nameservers:
+        addresses: [1.1.1.1, 8.8.8.8]
+    eth1:
+      link-local: [ ]
+      addresses:
+        - "2a11:f2c0:ffcb::1/48"
+      nameservers:
+        addresses: ["2606:4700:4700::1111", "2001:4860:4860::8888"]
+  tunnels:
+    ifog:
+      mode: gre
+      local: 203.0.113.1
+      remote: REDACTED
+      ttl: 255
+      addresses:
+        - "2a0c:9a40:a005::21a/126"
+      routes:
+        - to: default
+          via: "2a0c:9a40:a005::219"
+          metric: 10
+    udn:
+      mode: wireguard
+      addresses:
+        - "2a0f:e586:f:f747::20/64"
+      keys:
+        private: "REDACTED"
+      peers:
+        - keys:
+            public: "REDACTED"
+          allowed-ips:
+            - "2a0f:e586:f:f747::/64"
+          endpoint: "REDACTED"
+    openfactory:
+      mode: gre
+      local: 203.0.113.1
+      remote: REDACTED
+      ttl: 255
+      addresses:
+        - "2a01:20e:1000:1b1::2/126"
+      routes:
+        - to: default
+          via: "2a01:20e:1000:1b1::1"
+          metric: 20
+    netassist:
+      mode: sit
+      local: 203.0.113.1
+      remote: REDACTED
+      ttl: 255
+      addresses:
+        - "2a01:d0:7fff:244::2/6"
+      routes:
+        - to: default
+          via: "2a01:d0:7fff:244::1"
+          metric: 30
+    tritan:
+      mode: gre
+      local: 203.0.113.1
+      remote: REDACTED
+      ttl: 255
+      addresses:
+        - "fc82::2/126"
+      routes:
+        - to: default
+          via: "fc82::1"
+          metric: 40
